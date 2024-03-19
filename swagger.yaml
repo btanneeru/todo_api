@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Todo API
+  description: Todo API
+  version: 1.0.0
+servers:
+  - url: /api/v1/
+paths:
+  /todo/:
+    get:
+      tags:
+        - Todo
+      summary: List todo
+      description: |
+        Use to fetch all the todos with pagination
+      operationId: todo-list
+      security:
+        - APITokenHeader: []
+      parameters:
+        - name: page
+          in: query
+          description: |
+            Current Page
+
+            Default value is 1
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: |
+            Documents per page
+
+            Default value is 10
+          schema:
+            type: integer
+            default: 10
+        - name: sortBy
+          in: query
+          description: |
+            Available options : all arguments
+
+            Default value 'modified_on'
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: |
+            Available options 'asc' and 'desc'
+
+            Default value 'asc'
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        "200":
+          description: A successful response
+          content: {}
+        "400":
+          description: Bad Request
+          content: {}
+    post:
+      tags:
+        - Todo
+      summary: Create todo
+      operationId: todo-create
+      requestBody:
+        description: Object that needs to be added to todo
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                completed:
+                  type: boolean
+              required:
+                - title
+      responses:
+        '201':
+          description: Todo details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  todo:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      title:
+                        type: string
+                      completed:
+                        type: boolean
+                      modified_on:
+                        type: string
+                      created_on:
+                        type: string
+        '400':
+          description: Todo add Errors - Bad Request - invalid arguments 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Todo add Errors - Internal server error 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+  /todo/{todoId}:
+    put:
+      tags:
+        - Todo
+      summary: Update todo
+      operationId: update-todo
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: "ObjectId of todo record Ex: 6549d59a50e3824fa418c39d"
+      requestBody:
+        description: Object that needs to be update todo
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                completed:
+                  type: boolean
+              required:
+                - title
+      responses:
+        '200':
+          description: Update Todo successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Todo Update Errors - Bad Request - invalid todo id 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Todo update Errors - Todo Not found 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+        '500':
+          description: Todo update Errors - Internal server error 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+    get:
+      tags:
+        - Todo
+      summary: Get todo by its Id
+      description: |
+        Use to fetch a single todos with id
+      operationId: single-todo-list
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: "ObjectId of user record Ex: 6549d59a50e3824fa418c39d"
+      responses:
+        "200":
+          description: A successful response
+          content: {}
+        "400":
+          description: Bad Request
+          content: {}  
+    delete:
+      tags:
+        - Todo
+      summary: delete todo by its Id
+      description: |
+        Use to delete a single todo with id
+      operationId: single-todo-delete
+      parameters:
+        - name: todoId
+          in: path
+          required: true
+          schema:
+            type: string
+            description: "ObjectId of user record Ex: 6549d59a50e3824fa418c39d"
+      responses:
+        "200":
+          description: A successful response
+          content: {}
+        "400":
+          description: Bad Request
+          content: {}  
