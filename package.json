@@ -1,6 +1,6 @@
 {
   "name": "todo_api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Todo API",
   "main": "index.js",
   "scripts": {
@@ -29,5 +29,8 @@
     "trim-request": "^1.0.6",
     "validator": "^13.11.0",
     "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
   }
 }
