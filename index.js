@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 //Load env variables
 require("./config/envConfig").config();
-
+console.log(`APP_ENVIRONMENT:::: ${process.env.env || process.env.ENV}`);
 //Mongo DB Connection
 require("./config/mongodb").connectWithRetry();
 

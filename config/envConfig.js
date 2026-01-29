@@ -2,8 +2,14 @@ const path = require("path");
 
 //Configuring environment vairiables
 exports.config = () => {
-  const environment = "development";
-  let envPath = "./env/.env-dev";
+  const environment = process.env.env;
+  let envPath;
+  if(environment == "development"){
+    envPath = "./env/.env-dev";
+  }
+  if(environment == "staging"){
+    envPath = "./env/.env-stg";
+  }
   require("dotenv").config({ path: path.resolve(process.cwd(), envPath) });
   return environment;
 };

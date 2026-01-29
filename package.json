@@ -4,7 +4,8 @@
   "description": "Todo API",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env env=development nodemon index.js"
+    "start": "cross-env env=development nodemon index.js",
+    "start:stg": "cross-env env=staging nodemon index.js"
   },
   "keywords": [
     "todo_api"
