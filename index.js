@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const health = require("./src/utils/health");
+const health = require("./src/v1/utils/health");
 const mongoSanitize = require("express-mongo-sanitize");
 const swagger = require("./swagger");
 const swaggerUi = require("swagger-ui-express");
@@ -9,7 +9,7 @@ const swaggerUi = require("swagger-ui-express");
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
-const { TodoORM } = require("./src/orm");
+const { TodoORM } = require("./src/v1/orm");
 
 // Remove any keys containing prohibited characters
 // Helps us to prevent NoSQL injections
@@ -46,7 +46,7 @@ require("./config/envConfig").config();
 require("./config/mongodb").connectWithRetry();
 
 //Routing endpoints for todo modules
-app.use("/api/v1/todo", require("./src/routes/todo"));
+app.use("/api/v1/todo", require("./src/v1/routes/todo"));
 
 //Endpoint for Checking application health 
 app.use("/api/health-check", health.check);
