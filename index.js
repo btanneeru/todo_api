@@ -45,6 +45,8 @@ console.log(`APP_ENVIRONMENT:::: ${process.env.env || process.env.ENV}`);
 //Mongo DB Connection
 require("./config/mongodb").connectWithRetry();
 
+//Routing for user module
+app.use("/api/user", require("./src/user/routes/auth"));
 //Routing endpoints for todo modules
 app.use("/api/v1/todo", require("./src/v1/routes/todo"));
 

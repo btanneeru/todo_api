@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { todo } = require("../utils/constants");
+const { todo } = require("../utils/collections");
 
 const todoSchema = new mongoose.Schema(
   {

@@ -1,4 +1,1 @@
-exports.todo = {
-    model: "Todo",
-    collection: "todo",
-};
+exports.todo = "Todo"
