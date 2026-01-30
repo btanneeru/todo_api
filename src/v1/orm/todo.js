@@ -5,8 +5,8 @@ exports.getAllTodos = (query, limit, page, sort) => {
   return new Promise((resolve, reject) => {
     Todo.find(query)
       .sort(sort)
-      // .skip(limit * page - limit)
-      // .limit(limit)
+      .skip(limit * page - limit)
+      .limit(limit)
       .exec()
       .then((docs) => {
         Todo.countDocuments(query)

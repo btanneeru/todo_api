@@ -10,6 +10,9 @@ exports.config = () => {
   if(environment == "staging"){
     envPath = "./env/.env-stg";
   }
+  if(environment == "test"){
+    envPath = "./env/.env-test";
+  }
   require("dotenv").config({ path: path.resolve(process.cwd(), envPath) });
   return environment;
 };

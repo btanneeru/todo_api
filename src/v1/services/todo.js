@@ -2,7 +2,8 @@ const { TodoORM } = require("../orm");
 const CODE = require("../utils/httpResponseCode");
 const _ = require("lodash");
 const mongoose = require("mongoose");
-
+const escapeRegex = require("../../utils/regex-escape");
+const { nameContainsNumbersQuery } = require("../utils/commonConstants");
 // Get all todos
 exports.getAllTodos = (req, res) => {
     try {
@@ -23,15 +24,30 @@ exports.getAllTodos = (req, res) => {
         } else {
             sort.modified_on = -1;
         }
+        if (req.query.name_contains !== undefined) {
+            query.title = new RegExp("^" + escapeRegex(req.query.name_contains), "gi");
+        }
+        if (req.query.name_startswith !== undefined) {
+            query.title = new RegExp(
+                "^" + escapeRegex(req.query.name_startswith),
+                "gi"
+            );
+        } else if (
+            req.query.name_contains_number !== undefined &&
+            req.query.name_contains_number == "true"
+        ) {
+            query.title = { $in: nameContainsNumbersQuery };
+        }
+        console.log(query)
         TodoORM.getAllTodos(query, limit, page, sort)
         .then(async(result) => {
             res.status(CODE.EVERYTHING_IS_OK).json({
-                // current_page: page,
+                current_page: page,
                 total_record: result.totalCount,
-                // per_page: limit,
-                // previous_page: page - 1 > 0 ? page - 1 : undefined,
-                // last_page: Math.ceil(result.totalCount / limit),
-                // next_page: result.totalCount > limit * page ? page + 1 : undefined,
+                per_page: limit,
+                previous_page: page - 1 > 0 ? page - 1 : undefined,
+                last_page: Math.ceil(result.totalCount / limit),
+                next_page: result.totalCount > limit * page ? page + 1 : undefined,
                 todos: result.docs,
             });
         })

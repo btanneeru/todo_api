@@ -5,6 +5,9 @@ info:
   version: 1.0.0
 servers:
   - url: /api/v1/
+security:
+  - APIKeyHeader: []
+
 paths:
   /todo/:
     get:
@@ -54,6 +57,24 @@ paths:
             enum:
               - asc
               - desc
+        - name: name_contains
+          in: query
+          description: |
+            Todo title name like "Task 1"
+          schema:
+            type: string
+        - name: name_startswith
+          in: query
+          description: |
+            Todo title name like "Task 1"
+          schema:
+            type: string
+        - name: name_contains_number
+          in: query
+          description: |
+            false
+          schema:
+            type: boolean
       responses:
         "200":
           description: A successful response
@@ -234,3 +255,11 @@ paths:
         "400":
           description: Bad Request
           content: {}  
+  
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      description: |
+        Bearer \<token\>
+      name: Authorization
+      in: header
