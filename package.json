@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env env=development nodemon index.js",
     "start:stg": "cross-env env=staging nodemon index.js",
-    "test": "cross-env env=test jest --silent --coverage"
+    "test": "cross-env env=test jest --silent --coverage",
+    "coverage": "cross-env env=test jest --coverage && xdg-open coverage/lcov-report/index.html"
   },
   "keywords": [
     "todo_api"
