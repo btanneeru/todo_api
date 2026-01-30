@@ -10,7 +10,11 @@ const registerUser = (req = {}) => {
     const user = new User({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      phone: req.body.phone,
+      city: req.body.city,
+      country: req.body.country,
+      profileImg: req.body.profileImg
     });
     user.save()
       .then((doc) => {

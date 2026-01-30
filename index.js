@@ -39,6 +39,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Enable only in development HTTP request logger middleware
+app.use(require("morgan")("dev"));
+
 //Load env variables
 require("./config/envConfig").config();
 console.log(`APP_ENVIRONMENT:::: ${process.env.env || process.env.ENV}`);
@@ -56,8 +59,11 @@ app.use("/api/health-check", health.check);
 //Enpoint for http://localhost:5000/
 app.get("/", (req, res) => { res.send("Welcome To ToDo App API, Pls refer API Doc for Using this application: http://localhost:5000/api-docs/") });
 
-// Swagger set up
-app.use("/api-docs/", swagger.authenticationSystem, swaggerUi.serve, swaggerUi.setup());
+// Swagger set up main entities
+app.use("/api-docs/v1", swagger.v1, swaggerUi.serve, swaggerUi.setup());
+
+//Swagger doc for user module
+app.use("/api-docs/user", swagger.user, swaggerUi.serve, swaggerUi.setup());
 
 //Defining Port number
 const port = 5000;

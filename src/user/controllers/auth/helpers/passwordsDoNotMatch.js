@@ -7,7 +7,7 @@ const { buildErrObject } = require('../../../../v1/middlewares/buildErrObject')
 const passwordsDoNotMatch = async (user = {}) => {
   return new Promise((resolve, reject) => {
     try {
-      return reject(buildErrObject(409, 'WRONG_PASSWORD'))
+      return resolve(buildErrObject(400, 'WRONG_PASSWORD'))
     } catch (error) {
       throw error
     }

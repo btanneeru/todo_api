@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
-  title: Todo API
-  description: Todo API
+  title: Todo API (V1)
+  description: Todo API (V1)
   version: 1.0.0
 servers:
   - url: /api/v1/
